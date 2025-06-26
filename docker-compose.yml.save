@@ -7,7 +7,6 @@ services:
         image: sharelatex/sharelatex
         container_name: sharelatex
         privileged: true
-        user: root
         depends_on:
             mongo:
                 condition: service_healthy
@@ -45,7 +44,7 @@ services:
             ## Set for SSL via nginx-proxy
             #VIRTUAL_HOST: 103.112.212.22
 
-            OVERLEAF_SITE_URL: http://localhost
+            # OVERLEAF_SITE_URL: http://overleaf.example.com
             # OVERLEAF_NAV_TITLE: Overleaf Community Edition
             # OVERLEAF_HEADER_IMAGE_URL: http://example.com/mylogo.png
             # OVERLEAF_ADMIN_EMAIL: support@it.com
@@ -80,17 +79,18 @@ services:
             ## so the following environment variables must be commented out to avoid compile issues.
             ##
             ## Sandboxed Compiles: https://docs.overleaf.com/on-premises/configuration/overleaf-toolkit/server-pro-only-configuration/sandboxed-compiles
-            # SANDBOXED_COMPILES: 'true'
+            SANDBOXED_COMPILES: 'true'
             ### Bind-mount source for /var/lib/overleaf/data/compiles inside the container.
-            # SANDBOXED_COMPILES_HOST_DIR_COMPILES: '/home/user/sharelatex_data/data/compiles'
+            SANDBOXED_COMPILES_HOST_DIR_COMPILES: '/home/user/sharelatex_data/data/compiles'
             ### Bind-mount source for /var/lib/overleaf/data/output inside the container.
-            # SANDBOXED_COMPILES_HOST_DIR_OUTPUT: '/home/user/sharelatex_data/data/output'
+            SANDBOXED_COMPILES_HOST_DIR_OUTPUT: '/home/user/sharelatex_data/data/output'
             ### Backwards compatibility (before Server Pro 5.5)
-            # DOCKER_RUNNER: 'true'
-            # SANDBOXED_COMPILES_SIBLING_CONTAINERS: 'true'
+            DOCKER_RUNNER: 'true'
+            SANDBOXED_COMPILES_SIBLING_CONTAINERS: 'true'
 
             ## Works with test LDAP server shown at bottom of docker compose
-            # OVERLEAF_LDAP_URL: 'ldap://ldap:389'
+            # OVERLEAF_LDAP_
+URL: 'ldap://ldap:389'
             # OVERLEAF_LDAP_SEARCH_BASE: 'ou=people,dc=planetexpress,dc=com'
             # OVERLEAF_LDAP_SEARCH_FILTER: '(uid={{username}})'
             # OVERLEAF_LDAP_BIND_DN: 'cn=admin,dc=planetexpress,dc=com'
@@ -109,7 +109,6 @@ services:
     mongo:
         restart: always
         image: mongo:6.0
-        privileged: true
         container_name: mongo
         command: '--replSet overleaf'
         volumes:
@@ -131,7 +130,6 @@ services:
         restart: always
         image: redis:6.2
         container_name: redis
-        privileged: true
         volumes:
             - ~/redis_data:/data
 

@@ -1,0 +1,6 @@
+- To create an admin user use the command:
+docker exec sharelatex /bin/bash -c "cd/var/www/sharelatex; grunt user:create-admin --email=pay.ilias2002@gmail.com"
+
+- To install all the dependencies needed to run pdflatex use the commands: (inside the sharelatex container)
+tlmgr update --self #update the manager
+tlmgr install scheme-full

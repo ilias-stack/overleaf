@@ -1,3 +1,5 @@
+- Edit line 48 of docker-compose.yml file 'OVERLEAF_SITE_URL: http://localhost' into your host's
+
 - To create an admin user use the command:
 docker exec sharelatex /bin/bash -c "cd/var/www/sharelatex; grunt user:create-admin --email=pay.ilias2002@gmail.com"
 
